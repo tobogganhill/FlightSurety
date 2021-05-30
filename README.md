@@ -2,34 +2,34 @@
 
 ## DAPP
 
-The suggested flow is to start by trying to buy an insurance. An error message
-of "Airline not yet available to sell insurance" should be prompted in the
-"Operational Status" area since we have not added any funds yet. After receiving
-funds we should be able to buy insurance, display or get the insurance
-information and send a request of flight status to Oracles. This will trigger
-the callOracle and submitOracleResponse functions in the server. If Oracles
-report a status code of late airline, the contract will call the
-processFlightStatus function which will credit passenger with 1.5X the amount
-they paid and the passenger should be able to get paid.
+The suggested flow is to start by trying to purchase insurance. An error message
+of "Airline not yet available to sell insurance" should be displayed in the
+"Operational Status" because no funds have been added yet. After receiving funds
+we should be able to buy insurance, or receive the insurance information, and
+send a request of flight status to Oracles. This will trigger the callOracle and
+submitOracleResponse functions in the server. If Oracles report a status code of
+late airline, the contract will call the processFlightStatus function which will
+credit passenger with 1.5X the amount they paid and the passenger should be able
+to get paid.
 
 ## Server
 
-The server will start by initiallizing 40 oracles. After that it will be ready
-to receive any event call from our DAPP client.
+The server will start by initializing 10 oracles. After that it will be ready to
+receive any event call from the DAPP client.
 
 ## Features
 
 The first airline is registered when the contract is deployed with isActive
-status equals to true and haveFunds status equals to false. Next airlines are
+status equals to true and haveFunds status equals to false. Then airlines are
 added to the registration queue by calling the registerAirline function. To
-confirm registration a registered airline must call the setAirlineStatus
+confirm registration, a registered airline must call the setAirlineStatus
 function. The first 3 airlines will be registered without the need of approval
 of other airlines. Subsquently new airlines will need multi-party consensus of
 50% of registered airlines.
 
 To sell insurance the airline will need to submit funding of 10 ether to the
-contract. Test this from the Dapp by trying to sell insurance before adding
-funds to them.
+contract. This must be tested from the Dapp by trying to sell insurance before
+adding funds.
 
 ## Events
 
