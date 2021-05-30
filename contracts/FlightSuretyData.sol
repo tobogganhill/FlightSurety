@@ -26,12 +26,12 @@ contract FlightSuretyData {
         bool isQueued;
     }
 
-    mapping(address => VoteQueue) private countVote;            // Track the number of votes for an airline
+    mapping(address => VoteQueue) private countVote;      // Track the number of votes for an airline
     mapping(address => Insurance) insurance;             // Track all purchased insurances
     mapping(string => address[]) insurees;
     mapping(address => uint256) private payment;                // Add values to be paid
     // address[] memory insurees = new address[]();              // Keep track of the addresses that bought an insurance 
-    // mapping (address => uint256) private insurancesIndexes;  // Keep track the index of the address in the insurances array
+    // mapping (address => uint256) private insurancesIndexes;  // Keep track of the index of the address in the insurance array
 
     
 
@@ -66,7 +66,7 @@ contract FlightSuretyData {
     */
     modifier requireIsOperational() 
     {
-        require(operational, "Contract is currently not operational");
+        require(operational, "Contract is currently not operational.");
         _;  // All modifiers require an "_" which indicates where the function body will be added
     }
 
@@ -75,7 +75,7 @@ contract FlightSuretyData {
     */
     modifier requireContractOwner()
     {
-        require(msg.sender == contractOwner, "Caller is not contract owner");
+        require(msg.sender == contractOwner, "Caller is not contract owner.");
         _;
     }
 
@@ -334,7 +334,7 @@ contract FlightSuretyData {
 
    /**
     * @dev Initial funding for the insurance. Unless there are too many delayed flights
-    *      resulting in insurance payouts, the contract should be self-sustaining
+    *      resulting in insurance payouts, the contract should be self-sustaining.
     *
     */   
     function fund

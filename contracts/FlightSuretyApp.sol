@@ -48,14 +48,13 @@ contract FlightSuretyApp {
     //Airlines[] airlines;
 
     // Track the number of registered airlines
-    // We should start with one airline
+    // Start with one airline
     uint countAirlines = 1; 
 
     uint256 public constant FUND_FEE = 10 ether;                  // Fee to be paid when registering an airline
     uint256 public constant INSURANCE_FEE = 1 ether;             // Fee to be paid when registering oracle
 
-    FlightSuretyData flightSuretyData;
-    
+    FlightSuretyData flightSuretyData;    
 
  
     /********************************************************************************************/
@@ -73,7 +72,7 @@ contract FlightSuretyApp {
     modifier requireIsOperational() 
     {
          // Modify to call data contract's status
-        require(isOperational(), "Contract is currently not operational");  
+        require(isOperational(), "Contract is not currently operational");  
         _;  // All modifiers require an "_" which indicates where the function body will be added
     }
 
@@ -232,7 +231,7 @@ contract FlightSuretyApp {
                             public
                             returns(bool success, uint256 votes)
     {
-        require(airlines[msg.sender].isActive, "Caller is not active yet");
+        require(airlines[msg.sender].isActive, "Caller is not yet active.");
 
         flightSuretyData.registerAirline(airline);
         success = true;
@@ -246,9 +245,9 @@ contract FlightSuretyApp {
                                 )
                                 public
     {
-        require(flightSuretyData.isQueued(airline) == true, "Airline not added to the queue yet");
-        require(airlines[airline].airline == address(0), "Airline already exist");
-        require(airlines[msg.sender].isActive, "Caller is not active yet");
+        require(flightSuretyData.isQueued(airline) == true, "Airline not yet added to the queue.");
+        require(airlines[airline].airline == address(0), "Airline already exists.");
+        require(airlines[msg.sender].isActive, "Caller is not yet active.");
         
 
         if(countAirlines < 4) {
@@ -297,8 +296,8 @@ contract FlightSuretyApp {
                         public
                         payable
     {
-        require(msg.sender == airlines[msg.sender].airline, "You need to be a registered airline to add funds to this contract");
-        require(msg.value == FUND_FEE, "We need 10 ether here");
+        require(msg.sender == airlines[msg.sender].airline, "You must be a registered airline to add funds to this contract.");
+        require(msg.value == FUND_FEE, "Require 10 Ether!");
 
         airlines[msg.sender].haveFund = true;
         airlines[msg.sender].value = msg.value;
@@ -315,8 +314,8 @@ contract FlightSuretyApp {
                             public
                             payable
     {
-        require(msg.value <= INSURANCE_FEE, "Maximum insurance allowed is 1 ether");
-        require(airlines[airline].haveFund == true, "Airline not yet available to sell insurance");
+        require(msg.value <= INSURANCE_FEE, "Maximum insurance allowed is 1 Ether.");
+        require(airlines[airline].haveFund == true, "Airline is not yet available to sell insurance.");
 
         address passenger = msg.sender;
         uint256 amount = msg.value;
@@ -345,11 +344,11 @@ contract FlightSuretyApp {
     function payPassenger(address acc) public payable
     {
 
-        require(msg.sender == tx.origin, "Contracts not allowed");
+        require(msg.sender == tx.origin, "Contracts not allowed.");
         
         uint256 amount = flightSuretyData.pay(acc);
 
-        require(amount > 0, "Insufficient funds");
+        require(amount > 0, "Insufficient funds!");
 
         acc.transfer(amount); 
 
@@ -455,7 +454,7 @@ contract FlightSuretyApp {
                             payable
     {
         // Require registration fee
-        require(msg.value >= REGISTRATION_FEE, "Registration fee is required");
+        require(msg.value >= REGISTRATION_FEE, "Registration fee is required.");
 
         uint8[3] memory indexes = generateIndexes(msg.sender);
 
@@ -472,7 +471,7 @@ contract FlightSuretyApp {
                             external
                             returns(uint8[3])
     {
-        require(oracles[msg.sender].isRegistered, "Not registered as an oracle");
+        require(oracles[msg.sender].isRegistered, "Not registered as an oracle.");
 
         return oracles[msg.sender].indexes;
     }
@@ -497,7 +496,7 @@ contract FlightSuretyApp {
         require((oracles[msg.sender].indexes[0] == index) || (oracles[msg.sender].indexes[1] == index) || (oracles[msg.sender].indexes[2] == index), "Index does not match oracle request");
 
         bytes32 key = keccak256(abi.encodePacked(index, airline, flight, timestamp)); 
-        require(oracleResponses[key].isOpen, "Flight or timestamp do not match oracle request");
+        require(oracleResponses[key].isOpen, "Flight or timestamp does not match oracle request.");
 
         oracleResponses[key].responses[statusCode].push(msg.sender);
 

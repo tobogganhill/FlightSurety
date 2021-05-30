@@ -10,14 +10,14 @@ var HDWalletProvider = require('truffle-hdwallet-provider');
 // wallet with production blockchains.
 // This mnemonic is not secure. You should not trust it to manage blockchain assets.
 var mnemonic =
-	'people hurt library traffic punch machine return enroll ticket when pencil wrong';
+	'scan point gold cruel health uniform enlist marble behave object plastic illegal';
 
 module.exports = {
 	networks: {
 		development: {
 			provider: function () {
-				// return new HDWalletProvider(mnemonic, "http://127.0.0.1:8545/", 0, 50);
-				return new HDWalletProvider(mnemonic, 'http://127.0.0.1:7545/', 0, 50);
+				return new HDWalletProvider(mnemonic, 'http://127.0.0.1:8545/', 0, 50);
+				// return new HDWalletProvider(mnemonic, 'http://127.0.0.1:7545/', 0, 50);
 			},
 			network_id: '*',
 			gas: 5000000,

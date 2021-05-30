@@ -22,14 +22,14 @@ to receive any event call from our DAPP client.
 The first airline is registered when the contract is deployed with isActive
 status equals to true and haveFunds status equals to false. Next airlines are
 added to the registration queue by calling the registerAirline function. To
-confirme registration a registered airline must call the setAirlineStatus
+confirm registration a registered airline must call the setAirlineStatus
 function. The first 3 airlines will be registered without the need of approval
-of other airlines, but after that, new airlines will need multi-party consensus
-of 50% of registered airlines.
+of other airlines. Subsquently new airlines will need multi-party consensus of
+50% of registered airlines.
 
-To be able to sell insurance the airline will need to submit funding of 10 ether
-to the contract. We can test this from the Dapp by trying to sell an insurance
-before adding funds to them.
+To sell insurance the airline will need to submit funding of 10 ether to the
+contract. Test this from the Dapp by trying to sell insurance before adding
+funds to them.
 
 ## Events
 
